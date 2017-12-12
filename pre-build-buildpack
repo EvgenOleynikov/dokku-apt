@@ -25,6 +25,11 @@ if [ -f $DIR/apt-debconf ]; then
         fi
     done
 fi
+if [ -f $DIR/apt-packages-to-remove ]; then
+    PACKAGESREMOVE=\$(cat "$DIR/apt-packages-to-remove" | tr "\\n" " ")
+    apt-get remove -y \$PACKAGESREMOVE
+    echo "-----> Deleted packages: \$PACKAGESREMOVE"
+fi
 if [ -f $DIR/apt-packages ]; then
     PACKAGES=\$(cat "$DIR/apt-packages" | tr "\\n" " ")
     apt-get update
